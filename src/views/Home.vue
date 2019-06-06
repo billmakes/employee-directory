@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Table :items="employees" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import EmployeeService from '@/services/employee'
+import Table from '@/components/Table'
 export default {
-  name: "home",
+  name: 'home',
   components: {
-    HelloWorld
+    Table
+  },
+  data() {
+    return {
+      employees: [],
+      busy: true
+    }
+  },
+  created() {
+    EmployeeService.getAllEmployees().then(res => {
+      this.employees = res.employees
+    })
   }
-};
+}
 </script>
