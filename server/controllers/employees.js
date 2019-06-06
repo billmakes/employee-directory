@@ -1,4 +1,4 @@
-import db from '../db/db'
+const db = require('../db/db')
 
 class EmployeesController {
   getAllEmployees(req, res) {
@@ -131,4 +131,4 @@ class EmployeesController {
 }
 
 const employeeController = new EmployeesController()
-export default employeeController
+module.exports = employeeController
