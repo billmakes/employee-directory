@@ -1,11 +1,17 @@
 <template>
   <div class="Table">
     <h2>ABC Corp Employee Directory</h2>
-    <b-input
-      class="Table__Input"
-      placeholder="Filter employees by keyword..."
-      v-model="filter"
-    />
+    <div class="Table__Input">
+      <b-input placeholder="Filter employees by keyword..." v-model="filter" />
+      <div class="Table__Input--PerPage">
+        <span>Per Page:</span>
+        <b-form-select
+          v-model="perPage"
+          :options="perPageOptions"
+          text="Per Page"
+        ></b-form-select>
+      </div>
+    </div>
     <b-table
       id="Table"
       responsive
@@ -91,7 +97,8 @@ export default {
   data() {
     return {
       currentPage: 1,
-      perPage: 8,
+      perPage: 5,
+      perPageOptions: ['5', '10', '15', '20'],
       filter: '',
       params: {
         firstName: '',
@@ -142,7 +149,19 @@ export default {
 .Table {
   cursor: pointer !important;
   &__Input {
+    display: flex;
     margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+    &--PerPage {
+      display: flex;
+      min-width: 200px;
+      margin-left: 20px;
+      align-items: center;
+      span {
+        min-width: 80px;
+      }
+    }
   }
   &__Footer {
     display: flex;
