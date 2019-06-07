@@ -44,13 +44,13 @@
       <template slot="modal-header">
         <h5>Add a New Employee</h5>
       </template>
-      {{ params }}
       <div>
         <h5>First name</h5>
         <b-form-input
           id="input-1"
           label="Name"
           v-model="params.firstName"
+          required
           trim
         ></b-form-input>
         <h5>Last name</h5>
@@ -58,6 +58,7 @@
           id="input-1"
           label="Name"
           v-model="params.lastName"
+          required
           trim
         ></b-form-input>
         <h5>Department</h5>
@@ -65,6 +66,7 @@
           id="input-1"
           label="Name"
           v-model="params.department"
+          required
           trim
         ></b-form-input>
         <h5>Title</h5>
@@ -72,6 +74,7 @@
           id="input-1"
           label="Name"
           v-model="params.title"
+          required
           trim
         ></b-form-input>
       </div>
