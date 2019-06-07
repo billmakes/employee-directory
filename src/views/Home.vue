@@ -15,7 +15,8 @@ export default {
   data() {
     return {
       employees: [],
-      busy: true
+      search: '',
+      keys: []
     }
   },
   created() {

@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/employee/:id',
-      name: 'Employee',
+      name: 'employee',
       props: true,
       component: () =>
         import(/* webpackChunkName: "employee" */ './views/Employee.vue')

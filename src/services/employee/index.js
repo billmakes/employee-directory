@@ -21,7 +21,14 @@ export default class EmployeeService {
     }
   }
 
-  addEmployee(req, res) {}
+  static async addEmployee(params) {
+    try {
+      const result = await instance.post(endpoint, params)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
 
   static async updateEmployee(id, params) {
     try {

@@ -61,7 +61,7 @@
         <b-button variant="primary" @click="save()">Save</b-button>
       </template>
     </b-modal>
-    <b-modal id="delete-modal" title="BootstrapVue">
+    <b-modal id="delete-modal">
       <template slot="modal-header">
         <h5>Delete Employee Record</h5>
       </template>
@@ -88,7 +88,7 @@ export default {
       error: false
     }
   },
-  created() {
+  mounted() {
     EmployeeService.getEmployee(this.$route.params.id)
       .then(res => {
         this.employee = res.employee
@@ -102,7 +102,6 @@ export default {
         this.error = true
       })
   },
-  mounted() {},
   computed: {
     fullName() {
       return `${this.firstName} ${this.lastName}`

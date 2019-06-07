@@ -1,5 +1,11 @@
 <template>
   <div class="Table">
+    <h2>ABC Corp Employee Directory</h2>
+    <b-input
+      class="Table__Input"
+      placeholder="Filter employees by keyword..."
+      v-model="filter"
+    />
     <b-table
       id="Table"
       responsive
@@ -7,6 +13,7 @@
       striped
       bordered
       hover
+      :filter="filter"
       :fields="fields"
       :per-page="perPage"
       :current-page="currentPage"
@@ -18,16 +25,61 @@
         >
       </template>
     </b-table>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="Table"
-    ></b-pagination>
+    <div class="Table__Footer">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="Table"
+      ></b-pagination>
+      <b-button v-b-modal.add-modal variant="primary">Add Employee</b-button>
+    </div>
+    <b-modal id="add-modal">
+      <template slot="modal-header">
+        <h5>Add a New Employee</h5>
+      </template>
+      {{ params }}
+      <div>
+        <h5>First name</h5>
+        <b-form-input
+          id="input-1"
+          label="Name"
+          v-model="params.firstName"
+          trim
+        ></b-form-input>
+        <h5>Last name</h5>
+        <b-form-input
+          id="input-1"
+          label="Name"
+          v-model="params.lastName"
+          trim
+        ></b-form-input>
+        <h5>Department</h5>
+        <b-form-input
+          id="input-1"
+          label="Name"
+          v-model="params.department"
+          trim
+        ></b-form-input>
+        <h5>Title</h5>
+        <b-form-input
+          id="input-1"
+          label="Name"
+          v-model="params.title"
+          trim
+        ></b-form-input>
+      </div>
+      <template slot="modal-footer" slot-scope="{ hide }">
+        <b-button @click="hide('forget')">Cancel</b-button>
+        <b-button variant="primary" @click="addEmployee()">Add</b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 
 <script>
+import EmployeeService from '@/services/employee'
+
 export default {
   name: 'Table',
   props: {
@@ -40,6 +92,13 @@ export default {
     return {
       currentPage: 1,
       perPage: 8,
+      filter: '',
+      params: {
+        firstName: '',
+        lastName: '',
+        department: '',
+        title: ''
+      },
       fields: {
         edit: {
           label: '',
@@ -68,7 +127,27 @@ export default {
   methods: {
     viewItem(item) {
       this.$router.push({ path: `/employee/${item.id}` })
+    },
+    addEmployee() {
+      this.$root.$emit('bv::hide::modal', 'add-modal')
+      EmployeeService.addEmployee(this.params).then(res => {
+        const employeeId = res.data.employee.id
+        this.$router.push({ name: 'employee', params: { id: employeeId } })
+      })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.Table {
+  cursor: pointer !important;
+  &__Input {
+    margin-bottom: 10px;
+  }
+  &__Footer {
+    display: flex;
+    justify-content: space-between;
+    max-height: 38px;
+  }
+}
+</style>
